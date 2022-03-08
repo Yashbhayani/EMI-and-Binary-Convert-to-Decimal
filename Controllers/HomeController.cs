@@ -27,8 +27,7 @@ namespace EMI.Controllers
         public ActionResult About(Jumbo asd)
         {
             int r, d = 0;
-            for (int i = 0; asd.BBI != 0; ++i)
-            {
+            for (int i = 0; asd.BBI != 0; ++i) {
                 r = (int)(asd.BBI % 10);
                 asd.BBI = asd.BBI / 10;
                 d = (int)(d + (r) * Math.Pow(2, i));
@@ -36,20 +35,16 @@ namespace EMI.Controllers
             asd.Answer = d;
             ViewBag.ID = asd.Answer;
             return View(asd);
-
         }
 
 
         public ActionResult Contact()
         {
             ViewBag.Message = "Loan Calculator";
-
-            /*emi model = new emi();*/
-            return View(/*model*/);
+            return View();
         }
 
         [HttpPost]
-
         public ActionResult Contact(emi model)
         {
            
@@ -64,44 +59,29 @@ namespace EMI.Controllers
             model.TP = (float)Math.Round(TP);
 
             float rp = model.Amount;
-
-           
-
-            for (int i = 0; i < model.Time; i++)
-            {
+            for (int i = 0; i < model.Time; i++){
+            
                 DateTime dt = DateTime.Now.AddMonths(i);
-
-
+                
                 EmiCalculation ak = new EmiCalculation();
-
                 ak.IP = rp * (model.Rate / 12) / 100;
-
                 ak.BP = (float)(Math.Round(model.Emi) - ak.IP);
-
                 rp = (float)(Math.Round(rp) - Math.Round(ak.BP));
-
                 ak.RP = rp;
-
-                if (ak.RP <= 0)
-                {
+                if (ak.RP <= 0){
                     ak.RP = 0;
-                }
-                else if (ak.RP <= 10)
-                {
+                }else if (ak.RP <= 10){
                     ak.RP = 0;
                 }
 
                 float AP = (rp * 100) / model.Amount;
-
                 ak.RT = 100 - AP;
-                if (ak.RT >= 100)
-                {
+                if (ak.RT >= 100) {
                     ak.RT = 100;
                 }
                 ak.Month = dt.ToString("MMMM, yyyy");
                 emiCalculations.Add(ak);
             }
-
             model.EmiCalculations = emiCalculations;
             return View(model);
         }
