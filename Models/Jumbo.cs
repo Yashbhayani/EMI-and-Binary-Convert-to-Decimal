@@ -14,12 +14,5 @@ namespace EMI.Models
 
         [Display(Name = "Answer :-")]
         public int Answer { get; set; }
-        /*
-                [Required(ErrorMessage = "Please Enter Decimal Value")]
-                [Display(Name = "Decimal :-")]
-                public float DEC { get; set; }
-
-                [Display(Name = "Answer :-")]
-                public int Answer1 { get; set; }*/
     }
 }
