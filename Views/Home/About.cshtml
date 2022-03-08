@@ -1,0 +1,41 @@
+﻿@model EMI.Models.Jumbo
+
+@{
+    ViewBag.Title = "About";
+}
+<h2>@ViewBag.Title.</h2>
+<h3>@ViewBag.Message</h3>
+
+<p>Use this area to provide additional information.</p>
+
+
+<div>
+    @using (Html.BeginForm("About", "Home", FormMethod.Post))
+    {
+        <p>
+            @Html.LabelFor(m => m.BBI)
+            @Html.EditorFor(m => m.BBI)
+            @Html.ValidationMessageFor(m => m.BBI)
+        </p>
+        <br />
+        <div>
+            <input type="submit" value="Add" />
+        </div>
+
+        <br />
+        <br />
+    }
+    <div>
+
+
+            <p>
+                @Html.LabelFor(m => m.Answer)
+                @Html.DisplayFor(m => m.Answer)
+            </p>
+@*
+        <p>
+            @ViewBag.ID
+        </p>*@
+
+    </div>
+</div>

@@ -1,0 +1,197 @@
+﻿@model EMI.Models.emi
+@{
+    ViewBag.Title = "EMI";
+}
+
+
+
+<style>
+   
+    body {
+        background: linear-gradient( to right,#00AAff,#00ff6c);
+    }
+    h1 {
+        font-size: 5vw;
+        text-align: center;
+        font-family:'Times New Roman', Times, serif;
+    }
+    h2 {
+        font-size: 3vw;
+        text-align: center;
+    }
+
+    .ipo {
+        width: 550px;
+        height: 700px;
+        background-color: aqua;
+        text-align: center;
+        padding: 10px;
+        margin: 20px;
+        font-size: 2.5vw;
+        font-family: 'Californian FB';
+    }
+
+    .Ans {
+        width: 450px;
+        height: 350px;
+        background-color: darkgrey;
+        text-align: center;
+        padding: 10px;
+        margin: 20px;
+        font-size: 2.5vw;
+        margin-left: 600px;
+        margin-top:-230px;
+    }
+
+    span {
+        color: red;
+        font-family: 'Courier New';
+    }
+
+    table {
+        float: left;
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        margin-top: 150px;
+        font-size: 1.5vw;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+        text-align: center;
+    }
+    .e_mon {
+        background-color: #ff9999;
+    }
+    .e_Bas {
+        background-color: #cc99ff;
+    }
+    .e_Int {
+        background-color: #66ffb3;
+    }
+    .e_EMI {
+        background-color: #ff99e6;
+    }
+    .e_Rem {
+        background-color: #99e6ff;
+    }
+    .e_lpp {
+        background-color: #ffff99;
+    }
+    tr:nth-child(even) {
+        background-color: dodgerblue;
+    }
+
+    tr:nth-child(odd) {
+        background-color: ghostwhite;
+    }
+</style>
+
+@*<address>
+        One Microsoft Way<br />
+        Redmond, WA 98052-6399<br />
+        <abbr title="Phone">P:</abbr>
+        425.555.0100
+    </address>
+
+    <address>
+        <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
+        <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
+    </address>*@
+
+<h1>@ViewBag.Title</h1>
+@*<h3>@ViewBag.Message</h3>*@
+
+<div class="ipo" id="ipo">
+
+    @using (Html.BeginForm("Contact", "Home", FormMethod.Post))
+
+    {
+        <h2>EMI Calculator</h2>
+        <br />
+
+        <p class="Amount" id="Amount">
+            @Html.LabelFor(m => m.Amount) (&#8377;)
+            @Html.EditorFor(m => m.Amount)
+            @Html.ValidationMessageFor(m => m.Amount)
+        </p>
+        <br />
+        <br />
+
+        <p class="Rate" id="Rate">
+            @Html.LabelFor(m => m.Rate) (&#x25;)
+            @Html.EditorFor(m => m.Rate)
+            @Html.ValidationMessageFor(m => m.Rate)
+        </p>
+
+        <br />
+        <br />
+
+        <p class="Time" id="Time">
+            @Html.LabelFor(m => m.Time) (&#x4d;)
+            @Html.EditorFor(m => m.Time)
+            @Html.ValidationMessageFor(m => m.Time)
+
+        </p>
+
+        <br />
+
+        <div>
+            <input type="submit" value="Add" />
+        </div>
+
+
+    }
+    <div class="Ans" id="Ans">
+
+        <h2> <span>EMI Calculations</span></h2> <br />
+
+        <p>
+            @Html.LabelFor(m => m.Emi)
+            @Html.DisplayFor(m => m.Emi) &#8377;
+        </p>
+
+        <p>
+            @Html.LabelFor(m => m.TP)
+            @Html.DisplayFor(m => m.TP) &#8377;
+        </p>
+
+        <p>
+            @Html.LabelFor(m => m.TIP)
+            @Html.DisplayFor(m => m.TIP) &#8377;
+        </p>
+
+    </div>
+</div>
+
+    <table class="table" width="100%" style="text-align: center; ">
+        <tr>
+
+            <th class="e_mon">Month</th>
+            <th class="e_Bas">Basic Pay</th>
+            <th class="e_Int">Interest Pay</th>
+            <th class="e_EMI">EMI</th>
+            <th class="e_Rem">Remaining Pay</th>
+            <th class="e_lpp">Loan Paid<br />Percentage</th>
+        </tr>
+        @if (Model != null && Model.EmiCalculations != null)
+        {
+            foreach (var item in Model.EmiCalculations)
+            {
+                <tr>
+
+                    <th>@item.Month </th>
+                    <th>@Math.Round(item.BP) &#8377;</th>
+                    <th>@Math.Round(item.IP) &#8377;</th>
+                    <th>@Math.Round(Model.Emi) &#8377;</th>
+                    <th>@Math.Round(item.RP) &#8377;</th>
+                    <th>@String.Format("{0:0.##}",item.RT) &#x25;</th>
+                </tr>
+
+            }
+        }
+    </table>
+
